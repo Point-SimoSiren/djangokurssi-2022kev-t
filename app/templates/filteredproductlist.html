@@ -7,9 +7,11 @@
 <div id="add-div"></div>
 <br />
 
-<h1>Products</h1>
+<h1>Products by {{supplier.companyname}}</h1>
 
-<a onclick="showaddform()" class="btn btn-primary">Add new product</a>
+<a onclick="showaddform()" class="btn btn-success btn-sm">Add new product</a>
+
+<a href="/products/" class="btn btn-secondary">Back to all products</a>
 
 {% for p in products %}
 
@@ -19,13 +21,9 @@
         <h5 class="card-text">Supplier: {{p.supplier.companyname}}</h5>
         <p class="card-text">packagesize: {{p.packagesize}} | unitprice: {{p.unitprice}}</p>
         <p class="card-text" style="color: green;">Units in stock: {{p.unitsinstock}}</p>
-
         <a href="/edit-product-get/{{p.id}}/" class="btn btn-primary">Edit</a>
 
         <a href="/confirm-delete-product/{{p.id}}/" class="btn btn-danger">Delete</a>
-
-        <a href="/products-by-supplier/{{p.supplier.id}}/" class="btn btn-secondary">{{p.supplier.companyname}}´s all
-            Products</a>
 
     </div>
 </div>

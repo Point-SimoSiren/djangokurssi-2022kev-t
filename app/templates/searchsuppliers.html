@@ -14,6 +14,13 @@
 
 <br /> <br />
 
+<a href="/suppliers/" class="btn btn-primary btn-sm">Show all Suppliers</a>
+
+<button onclick="abc()" class="btn btn-warning btn-sm">Tee abc alertointi</button>
+
+
+<br /> <br />
+
 <!-- Hakukenttä -->
 <form method="post" action="/search-suppliers/">
 
@@ -40,7 +47,7 @@
 </div>
 
 {% empty %}
-<h3>No Suppliers saved in the database.</h3>
+<h3>Search didn´t match any of Suppliers.</h3>
 
 {% endfor %}
 
