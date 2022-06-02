@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Suppliers</h1>
+
+
+{% for s in suppliers %}
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <h4 class="card-title">{{s.companyname}}</h4>
+        <p class="card-text">{{s.contactname}} | phone: {{s.phone}} | email: {{s.email}} </p>
+        <p class="card-text">Address: {{s.address}} | Country: {{s.country}}</p>
+
+        <a class="btn btn-primary">Edit</a>
+        <a class="btn btn-danger">Delete</a>
+        <a class="btn btn-secondary">{{s.companyname}}'s Products</a>
+    </div>
+</div>
+
+{% empty %}
+<h3>No Suppliers saved in the database.</h3>
+
+{% endfor %}
+
+
+{% endblock %}
