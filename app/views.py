@@ -1,18 +1,49 @@
 from django.shortcuts import render, redirect
 from .models import Supplier, Product
+from django.contrib.auth import authenticate, login, logout
 
 
-def landingview(request):
-    return render(request, 'landingpage.html')
+# Loginpage
+def loginview(request):
+    return render (request, "loginpage.html")
+
+
+# Login action
+def login_action(request):
+    user = request.POST['username']
+    passw = request.POST['password']
+    # Löytyykö kyseistä käyttäjää?
+    user = authenticate(username = user, password = passw)
+    #Jos löytyy:
+    if user:
+        # Kirjataan sisään
+        login(request, user)
+        # Tervehdystä varten context
+        context = {'name': user.first_name}
+        # Kutsutaan suoraan landingview.html
+        return render(request,'landingpage.html',context)
+    # Jos ei kyseistä käyttäjää löydy
+    else:
+        return render(request, 'loginerror.html')
+
+
+# Logout action
+def logout_action(request):
+    logout(request)
+    return render(request, 'loginpage.html')
+
 
 
 ################## Product views #######################
 
 def productlistview(request):
-    productlist = Product.objects.all()
-    supplierlist = Supplier.objects.all()
-    context = {'products': productlist, 'suppliers': supplierlist}
-    return render (request,"productlist.html",context)
+     if not request.user.is_authenticated:
+        return render(request, 'loginpage.html')
+     else:
+        productlist = Product.objects.all()
+        supplierlist = Supplier.objects.all()
+        context = {'products': productlist, 'suppliers': supplierlist}
+        return render (request,"productlist.html",context)
 
 
 def addproduct(request):
@@ -41,6 +72,7 @@ def editproductget(request, id):
         product = Product.objects.get(id = id)
         context = {'product': product}
         return render (request,"editproduct.html",context)
+
 
 # Muokkaus post
 def editproductpost(request, id):
